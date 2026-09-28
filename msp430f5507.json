@@ -1,0 +1,17 @@
+{
+  "platform": "timsp430",
+  "build": {
+    "core": "msp430", 
+    "f_cpu": "25000000L", 
+    "mcu": "msp430f5507", 
+    "variant": "launchpad_f5507"
+  }, 
+  "name": "TI msp430f5507", 
+  "upload": {
+    "maximum_ram_size": 4096, 
+    "maximum_size": 32768, 
+    "protocol": "tilib"
+  }, 
+  "url": "http://www.tij.co.jp/product/jp/MSP430F5507", 
+  "vendor": "TI"
+}
