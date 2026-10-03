@@ -81,7 +81,6 @@ extern volatile uint8_t usb_printf_state;
 BYTE USB_handleVbusOnEvent ()
 {
     //TO DO: You can place your code here
-P6OUT &= ~BIT0;
 
     //We switch on USB and connect to the BUS
     if (USB_enable() == kUSB_succeed){

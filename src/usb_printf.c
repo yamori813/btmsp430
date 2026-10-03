@@ -69,10 +69,16 @@ void usb_receive_string(void) {
         CDC0_INTFNUM);                                                         
     msg[msg_len] = 0;
     bCDCDataReceived_event = FALSE;
+    if(msg[0] == 'a')
+        P6OUT &= ~BIT0;
+    if(msg[0] == 'b')
+        P6OUT |= BIT0;
+/*
     if(strncmp(msg, "shell", 5) == 0) {
         DEBUG("Entering shell\r\n");
         console();
     } else {
         DEBUG("USB (l=%d): %s\r\n", msg_len, msg);
     }
+*/
 }
