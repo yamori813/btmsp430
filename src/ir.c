@@ -31,6 +31,7 @@ void ir(int sw)
 	}
 }
 
+#if 0
 int main(void)
 {
 char buf[32];
@@ -60,6 +61,7 @@ char buf[32];
 
 	for (;;) _BIS_SR(CPUOFF);	// into LPM0
 }
+#endif
 
 void start_timer(int usec)
 {
