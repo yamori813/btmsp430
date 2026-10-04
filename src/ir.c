@@ -226,7 +226,7 @@ int curbit;
 	TA0CTL = TASSEL_2 | MC_3 | TACLR;
 }
 
-sendir(int type, int len, char *dat, int rep)
+void sendir(int type, int len, char *dat, int rep)
 {
 int i;
 

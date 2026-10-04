@@ -19,6 +19,8 @@
 char input[64];
 unsigned int RXByteCtr = 0;
 
+void sendir(int type, int len, char *dat, int rep);
+
 void uart_init(void)
 {
 	P4SEL = BIT4 + BIT5;		// P4.4,5 = USCI_A1 TXD/RXD

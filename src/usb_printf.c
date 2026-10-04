@@ -59,6 +59,9 @@ void init_clock(void) {
 #endif
 }
 
+char on[2] = {66, 48};
+char off[2] = {194, 48};
+
 extern volatile BYTE bCDCDataReceived_event;   
 void usb_receive_string(void) {
     uint8_t msg_len = 0;
@@ -69,10 +72,14 @@ void usb_receive_string(void) {
         CDC0_INTFNUM);                                                         
     msg[msg_len] = 0;
     bCDCDataReceived_event = FALSE;
-    if(msg[0] == 'a')
+    if(msg[0] == 'a') {
         P6OUT &= ~BIT0;
-    if(msg[0] == 'b')
+        sendir(2, 12, on, 2);
+    }
+    if(msg[0] == 'b') {
         P6OUT |= BIT0;
+        sendir(2, 12, off, 2);
+    }
 /*
     if(strncmp(msg, "shell", 5) == 0) {
         DEBUG("Entering shell\r\n");

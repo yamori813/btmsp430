@@ -60,6 +60,9 @@ int main(void) {
     /* Turn off all LED */
     P6OUT = BIT0 | BIT1 | BIT2;
 
+    /* IR output port with PWM */
+    P2DIR |= BIT0;
+
 #ifdef TESTING
     return test();
 #endif
