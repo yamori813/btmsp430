@@ -102,7 +102,7 @@ void usb_receive_string(void) {
         }
         sendir(chrint(cmdbuf[1]), chrint(cmdbuf[0]) * 4, binbuf, 2);
         cmdsize = 0;
-        DEBUG("ok\r\n");
+        usb_printf("ok\r\n");
     }
 
 }

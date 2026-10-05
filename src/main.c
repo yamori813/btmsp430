@@ -69,8 +69,7 @@ int main(void) {
     // Initialize the different parts
     msp_init();
 
-    DEBUG("Running\r\n");
-//    P6OUT &= ~BIT0;
+//    DEBUG("Running\r\n");
 
     // Main loop
     while(1) {  
