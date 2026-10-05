@@ -3,7 +3,7 @@
 sp = SerialPort.new("/dev/cuaU0", 9600, 8, 1, 0)
 
 # SONY PT-D4W B ON
-cmd = [0x32, 0x42, 0x30]
+cmd = [0x33, 0x42, 0x30]
 
 hex_array = cmd.map { |n| sprintf('%02x', n) }
 

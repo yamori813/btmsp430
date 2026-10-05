@@ -242,11 +242,11 @@ int i;
 
 void __attribute__ ((interrupt(TIMER0_A0_VECTOR))) TIMER0_A0_ISR (void)
 {
-	if (irtype == 2)
+	if (irtype == 3)
 		sonyir();
 	else if (irtype == 1)
 		aehair();
-	else if (irtype == 0)
+	else if (irtype == 2)
 		necir();
 	TA0CCTL0 &= ~CCIFG;
 }
