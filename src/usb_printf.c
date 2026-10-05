@@ -59,12 +59,29 @@ void init_clock(void) {
 #endif
 }
 
-char on[2] = {66, 48};
-char off[2] = {194, 48};
+int chrint(char c)
+{
+    if(c >= '0' && c <= '9')
+        return c - '0';
+    else
+        return c - 'a' + 10;
+}
+
+char on[2] = {0x42, 0x30};
+
+// first byte hi 4 bit is length / 4
+// first byte low 4 bit is type
+// after second byte is data
+// 324230<LF>
+
+char cmdbuf[32];
+char binbuf[16];
+char cmdsize = 0;
 
 extern volatile BYTE bCDCDataReceived_event;   
 void usb_receive_string(void) {
     uint8_t msg_len = 0;
+    int i;
     char msg[MAX_STR_LENGTH];
     //Get the next piece of the string
     msg_len = cdcReceiveDataInBuffer((BYTE*)msg,
@@ -72,20 +89,20 @@ void usb_receive_string(void) {
         CDC0_INTFNUM);                                                         
     msg[msg_len] = 0;
     bCDCDataReceived_event = FALSE;
-    if(msg[0] == 'a') {
-        P6OUT &= ~BIT0;
-        sendir(2, 12, on, 2);
-    }
-    if(msg[0] == 'b') {
-        P6OUT |= BIT0;
-        sendir(2, 12, off, 2);
-    }
-/*
-    if(strncmp(msg, "shell", 5) == 0) {
-        DEBUG("Entering shell\r\n");
-        console();
+    if(cmdsize + msg_len < sizeof(cmdbuf)) {
+        memcpy(cmdbuf + cmdsize, msg, msg_len);
+        cmdsize += msg_len;
     } else {
-        DEBUG("USB (l=%d): %s\r\n", msg_len, msg);
+        cmdsize = 0;
     }
-*/
+    if(cmdbuf[cmdsize - 1] == '\n') {
+        for(i = 2; i < cmdsize - 1; i += 2) {
+            binbuf[(i - 2) / 2] = (chrint(cmdbuf[i]) << 4) +
+                chrint(cmdbuf[i + 1]);
+        }
+        sendir(chrint(cmdbuf[1]), chrint(cmdbuf[0]) * 4, binbuf, 2);
+        cmdsize = 0;
+        DEBUG("ok\r\n");
+    }
+
 }
