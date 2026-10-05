@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 #include <msp430.h>
-#include "utils.h"
 
 void wdt_stop(void);
 void wdt_start(void);
