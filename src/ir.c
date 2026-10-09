@@ -176,7 +176,7 @@ void necir()
 	TA0CTL = TASSEL_2 | MC_3 | TACLR;	
 }
 
-void mitsuir()
+void melcoir()
 {
 	int curbit;
 	
@@ -219,12 +219,12 @@ void mitsuir()
 			bitpos = 0;
 		} else if (bitpos == 0) {
 			ir(1);
-			SETTIMER(500);
+			SETTIMER(460);
 			bitpos = 1;
 		} else {
 			ir(0);
 			if (curbit == 0)
-				SETTIMER(560);
+				SETTIMER(380);
 			else
 				SETTIMER(1400);
 			bitpos = 0;
@@ -314,7 +314,7 @@ void __attribute__ ((interrupt(TIMER0_A0_VECTOR))) TIMER0_A0_ISR (void)
 	else if (irtype == 2)
 		necir();
 	else if (irtype == 4)
-		mitsuir();
+		melcoir();
 	TA0CCTL0 &= ~CCIFG;
 }
 
