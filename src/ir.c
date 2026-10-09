@@ -176,6 +176,68 @@ void necir()
 	TA0CTL = TASSEL_2 | MC_3 | TACLR;	
 }
 
+void mitsuir()
+{
+	int curbit;
+	
+	if (curpos == 0) {
+		ir(1);
+		bitpos = 0;
+		++curpos;
+		SETTIMER(7900);
+	} else if (curpos == 1) {
+		ir(0);
+		++curpos;
+		SETTIMER(3900);
+	} else if (curpos - 2 == irbitlen) {
+		ir(1);
+		++curpos;
+		SETTIMER(560);
+	} else if (curpos - 3 == irbitlen) {
+		ir(0);
+		// STOP or REPETE
+		if (repate == 0) {
+			P6OUT |= BIT1;
+			P6OUT &= ~BIT0;
+			TA0CCTL0 &= ~CCIE;
+		} else {
+			SETTIMER(18400);
+			curpos = 0;
+			irbitlen = -1;
+			--repate;
+		}
+	} else {
+		curbit = irpat[(curpos - 2) / 8];
+		curbit = (curbit >> (7 - ((curpos - 2) % 8))) & 1;
+		if (bitpos == -2) {
+			ir(1);
+			SETTIMER(500);
+			bitpos = -1;
+		} else if (bitpos == -1) {
+			ir(0);
+			SETTIMER(3900);
+			bitpos = 0;
+		} else if (bitpos == 0) {
+			ir(1);
+			SETTIMER(500);
+			bitpos = 1;
+		} else {
+			ir(0);
+			if (curbit == 0)
+				SETTIMER(560);
+			else
+				SETTIMER(1400);
+			bitpos = 0;
+			++curpos;
+			if (curpos > 2 && (curpos - 2) % 8 == 0)
+				bitpos = -2;
+			else
+				bitpos = 0;
+		}
+	}
+	TA0CTL = TASSEL_2 | MC_3 | TACLR;	
+}
+
 void sonyir()
 {
 int curbit;
@@ -251,6 +313,8 @@ void __attribute__ ((interrupt(TIMER0_A0_VECTOR))) TIMER0_A0_ISR (void)
 		aehair();
 	else if (irtype == 2)
 		necir();
+	else if (irtype == 4)
+		mitsuir();
 	TA0CCTL0 &= ~CCIFG;
 }
 
