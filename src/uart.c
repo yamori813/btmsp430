@@ -67,9 +67,6 @@ char data;
 			RXByteCtr = 0;
 //			if(input[1] == 7 && input[5] == 2) {
 			if(input[1] > 2) {
-				/* Indicate LED */
-				P6OUT |= BIT0;
-				P6OUT &= ~BIT1;
 				sendir(input[5], input[6], input + 7, input[3]);
 			}
 		}
