@@ -54,6 +54,7 @@ int main(void) {
     // we don't run the main application
     // This can be done by executing
     // rake test=1
+    /* BIT0 = blue, BIT1 = green, BIT2 = red */
     /* Init Output ports to GND */
     P6DIR = BIT0 | BIT1 | BIT2;
 
@@ -62,6 +63,10 @@ int main(void) {
 
     /* IR output port with PWM */
     P2DIR |= BIT0;
+
+    /* Interrupts on Power button */
+    P1IES  = BIT1;
+    P1IE   = BIT1;
 
 #ifdef TESTING
     return test();

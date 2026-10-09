@@ -238,6 +238,9 @@ int i;
 
 	curpos = 0;
 	start_timer(10);
+
+	P6OUT |= BIT0;
+	P6OUT &= ~BIT1;
 }
 
 void __attribute__ ((interrupt(TIMER0_A0_VECTOR))) TIMER0_A0_ISR (void)
@@ -253,6 +256,7 @@ void __attribute__ ((interrupt(TIMER0_A0_VECTOR))) TIMER0_A0_ISR (void)
 
 void __attribute__ ((interrupt(PORT1_VECTOR))) PORT1_ISR (void)
 {
+#if 0
 	if (irctl == 0) {
 		/* BT Enable */
 		P4OUT |= BIT2;
@@ -268,6 +272,7 @@ void __attribute__ ((interrupt(PORT1_VECTOR))) PORT1_ISR (void)
 		P6OUT |= BIT0;
 		wait();
 	}
+#endif
 
 	P1IFG &= ~BIT1;
 }
