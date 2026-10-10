@@ -270,16 +270,18 @@ int curbit;
 			if (bitpos == 0) {
 				ir(1);
 				if (curbit == 0)
-					SETTIMER(660);
+					SETTIMER(600);
 				else
-					SETTIMER(1245);
+					SETTIMER(1200);
 				bitpos = 1;
 			} else {
 				ir(0);
+/*
 				if (curbit == 0)
 					SETTIMER(540);
 				else
-					SETTIMER(540);
+*/
+					SETTIMER(600);
 				bitpos = 0;
 				++curpos;
 			}
